@@ -24,7 +24,6 @@ public class VideoManager : MonoBehaviour
     {
         fadeAnim.SetTrigger("FadeIn");
         yield return new WaitForSeconds(1.5f);
-        currentSphere.GetComponentInChildren<Canvas>().enabled = false;
         destination.SetActive(true);
         transform.position = destination.transform.position;
         while (!destination.GetComponentInChildren<VideoPlayer>().isPlaying)
