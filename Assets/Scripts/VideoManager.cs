@@ -22,11 +22,13 @@ public class VideoManager : MonoBehaviour
     /* Coroutine to load the next video during the transition animation. */
     private IEnumerator StartNextVideo(GameObject currentSphere, GameObject destination)
     {
+        VideoPlayer videoPlayer = destination.GetComponentInChildren<VideoPlayer>();
+
         fadeAnim.SetTrigger("FadeIn");
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
         destination.SetActive(true);
         transform.position = destination.transform.position;
-        while (!destination.GetComponentInChildren<VideoPlayer>().isPlaying)
+        while (!videoPlayer.isPlaying)
             yield return null;
         ActivateCanvas(currentSphere, destination.GetComponentInChildren<Canvas>());
     }
@@ -34,7 +36,13 @@ public class VideoManager : MonoBehaviour
     /* Activates the canvas of the current sphere. */
     private void ActivateCanvas(GameObject currentSphere, Canvas destinationCanvas)
     {
+        GameObject[] informations = GameObject.FindGameObjectsWithTag("Informations");
+
         currentSphere.SetActive(false);
+
+        foreach (GameObject infoBubble in informations)
+            infoBubble.SetActive(false);
+
         destinationCanvas.enabled = true;
     }
 }
